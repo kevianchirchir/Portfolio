@@ -1,4 +1,6 @@
 import { Sun, Moon } from "@boxicons/react";
+import { motion } from "motion/react"
+
 
 function Header({ menuSelected, setMenuSelected, setModeSelected, modeSelected }) {
   const isActive = (menu) => {
@@ -10,8 +12,8 @@ function Header({ menuSelected, setMenuSelected, setModeSelected, modeSelected }
     }
 
     return `${base} ${modeSelected === "dark"
-        ? "text-white/50 hover:text-white hover:bg-zinc-700"
-        : "text-gray-500 hover:text-black hover:bg-zinc-200"
+      ? "text-white/50 hover:text-white hover:bg-zinc-700"
+      : "text-gray-500 hover:text-black hover:bg-zinc-200"
       }`;
   };
 
@@ -19,7 +21,7 @@ function Header({ menuSelected, setMenuSelected, setModeSelected, modeSelected }
     modeSelected === "light" ? "bg-white" : "bg-zinc-800";
 
   return (
-    <div
+    <motion.div initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 }, }}
       className={`fixed top-4 left-1/2 -translate-x-1/2
       flex items-center justify-between gap-2 md:gap-4
       px-3 md:px-4 py-2
@@ -33,7 +35,8 @@ function Header({ menuSelected, setMenuSelected, setModeSelected, modeSelected }
         {["home", "about", "projects", "contact"].map((item) => (
           <button
             key={item}
-            onClick={() => setMenuSelected(item)}
+            
+            onClick={() =>{ setMenuSelected(item); document.getElementById(item)?.scrollIntoView({behavior: "smooth"}); }}
             className={isActive(item)}
           >
             {item}
@@ -62,7 +65,7 @@ function Header({ menuSelected, setMenuSelected, setModeSelected, modeSelected }
       >
         {modeSelected === "light" ? <Sun /> : <Moon />}
       </button>
-    </div>
+    </motion.div>
   );
 }
 
