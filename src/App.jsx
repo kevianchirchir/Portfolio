@@ -2,11 +2,12 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import Header from './components/Header'
 import Content from './components/Content'
+
 function App() {
     const [menuSelected, setMenuSelected] = useState("home")
 
     const [modeSelected, setModeSelected] = useState(() => {
-        return localStorage.getItem("theme") || "light"
+        return localStorage.getItem("theme") || "dark"
     })
 
     useEffect(() => {

@@ -1,8 +1,12 @@
 import { Typewriter } from "react-simple-typewriter";
 import { motion, spring } from "motion/react"
 import StackIcon from "tech-stack-icons";
+import { useState, useEffect } from "react";
+import ScrollIndicator from "./ScrollIndicator";
+import { Sun, Moon } from "@boxicons/react";
+import Cards from "./Cards"
 
-function Content({ themeClass, modeSelected, menuSelected, setMenuSelected }) {
+function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setModeSelected }) {
     const icons = [
         "tailwindcss", "react", "java", "azure", "css3",
         "electron", "python", "html5", "git",
@@ -29,15 +33,34 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected }) {
         powershell: "https://learn.microsoft.com/en-us/powershell/"
     };
 
-    
+    const [canScroll, setCanScroll] = useState(true)
+
+    useEffect(() => {
+        setCanScroll(menuSelected === "home" || "about" || "projects");
+    }, [menuSelected]);
     return (
         <div className="overscroll-behavior-y-contain w-full h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth ">
 
+          
+
             {/* HOME */}
 
-            <motion.section whileInView={() => setMenuSelected("home")} viewport={{ amount: 0.6 }} id="home" className={`${themeClass} transition-colors w-full h-screen flex flex-col items-center justify-center snap-start px-4`}>
+            <motion.section whileInView={() => setMenuSelected("home")} viewport={{ amount: 0.6 }} id="home" className={`${themeClass} relative  z-0transition-colors w-full h-screen flex flex-col items-center justify-center snap-start px-4`}>
+                {/* SCROLL ANIMATION */}
+                {canScroll && <ScrollIndicator />}
 
-                <motion.h1 initial={{ y: 150}} animate={{ y: 0 }} transition={{ duration: 0.35, delay: 2 }} className="text-3xl text-center sm:text-5xl font-bold">
+                {/* MOBILE THEME MODE BUTTON */}
+                <button
+                    className="md:hidden fixed bottom-5 border right-5 cursor-pointer p-2 rounded-full transition-colors "
+                    onClick={() =>
+                        setModeSelected(modeSelected === "light" ? "dark" : "light")
+                    }
+                >
+                    {modeSelected === "light" ? <Sun /> : <Moon />}
+                </button>
+
+
+                <motion.h1 initial={{ y: 150 }} animate={{ y: 0 }} transition={{ duration: 0.35, delay: 2 }} className="text-3xl text-center sm:text-5xl font-bold">
                     <Typewriter
                         words={["Hi, I'm Kevian"]}
                         loop={1}
@@ -53,9 +76,9 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected }) {
                     <h1 >Computer Programming @ Fanshawe</h1>
                     <h1>Front-End Developer • React • UI Building</h1>
                     <div className="flex items-center justify-center gap-5 m-2">
-                        
-                        <motion.a className="cursor-pointer sm:w-15 sm:h-15 h-12 w-12 bg-white rounded-full" href="https://www.linkedin.com/in/kevian-chirchir-06a583300/" whileHover={{scale: 1.2}}><img src="../src/assets/linkedin.svg" alt="Linkedin"  /></motion.a>
-                        <motion.a className="cursor-pointer sm:w-15 sm:h-15 h-12 w-12 bg-white rounded-full" href="https://github.com/kevianchirchir" whileHover={{scale: 1.2}}><img src="../src/assets/github.svg" alt="Github"  /></motion.a>
+
+                        <motion.a className="cursor-pointer sm:w-15 sm:h-15 h-12 w-12 bg-white rounded-full" href="https://www.linkedin.com/in/kevian-chirchir-06a583300/" whileHover={{ scale: 1.2 }}><img src="../src/assets/linkedin.svg" alt="Linkedin" /></motion.a>
+                        <motion.a className="cursor-pointer sm:w-15 sm:h-15 h-12 w-12 bg-white rounded-full" href="https://github.com/kevianchirchir" whileHover={{ scale: 1.2 }}><img src="../src/assets/github.svg" alt="Github" /></motion.a>
                     </div>
                 </motion.div>
                 <motion.h1 initial={{ opacity: 0, scale: 0, y: 30 }} animate={{ opacity: 1, scale: 1, type: spring }} transition={{ delay: 2.5, duration: 0.4 }} >
@@ -73,7 +96,7 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected }) {
                             <motion.a
                                 key={i}
                                 href={iconLinks[icon]}
-                                className="icon  shadow-lg min-w-17.5 flex justify-center items-center cursor-pointer"
+                                className="icon shadow-lg min-w-17.5 flex justify-center items-center cursor-pointer"
                                 whileHover={{ scale: 1.2 }}
 
                             >
@@ -89,21 +112,28 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected }) {
 
 
             {/* NEXT SECTION */}
-            <motion.section whileInView={() => setMenuSelected("about")} viewport={{ amount: 0.6 }} id="about" className={`transition-colors w-full h-screen flex items-center justify-center snap-start ${themeClass}  px-4`}>  
+            <motion.section onViewportEnter={() => setMenuSelected("about")} viewport={{ amount: 0.6 }} id="about" className={`transition-colors w-full h-screen flex items-center justify-center snap-start ${themeClass}  px-4`}>
                 <motion.h2 initial={{ scale: 0, opacity: 0 }} whileInView={{ scale: 1, opacity: 1 }} transition={{ duration: 0.5, bounce: spring }} className="text-2xl sm:text-4xl">About Me</motion.h2>
+
             </motion.section>
 
 
             {/* NEXT SECTION */}
-            <motion.section whileInView={() => setMenuSelected("projects")} viewport={{ amount: 0.6 }} id="projects" className={`transition-colors w-full h-screen flex items-center justify-center snap-start ${themeClass}  px-4`}>
-                <h2 className="text-4xl">Projects</h2>
+            <motion.section onViewportEnter={() => setMenuSelected("projects")} viewport={{ amount: 0.6 }} id="projects" className={`flex-col transition-colors w-full h-screen flex items-center justify-center snap-start ${themeClass}  px-4`}>
+                <h2 className="text-4xl mb-7">What I've Been Working On</h2>
+                <Cards/>
             </motion.section>
 
             {/* NEXT SECTION */}
-            <motion.section whileInView={() => setMenuSelected("contact")} viewport={{ amount: 0.6 }} id="contact" className={`transition-colors w-full h-screen flex items-center justify-center snap-start ${themeClass}  px-4`}>
+            <motion.section onViewportEnter={() => setMenuSelected("contact")} viewport={{ amount: 0.6 }} id="contact"
+                className={`transition-colors w-full h-screen flex items-center justify-center snap-start ${themeClass}  px-4`}>
                 <h2 className="text-4xl">Contact</h2>
+                
+
             </motion.section>
         </div>
     );
 }
+
+
 export default Content;

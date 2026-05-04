@@ -21,7 +21,7 @@ function Header({ themeClass, menuSelected, setMenuSelected, setModeSelected, mo
 
   return (
     <motion.div initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 }, }}
-      className={`fixed top-4 left-1/2 -translate-x-1/2
+      className={`absolute z-4 top-4 left-1/2 -translate-x-1/2
       flex items-center justify-between gap-2 md:gap-4
       px-3 md:px-4 py-2
       rounded-full shadow-lg
@@ -30,7 +30,7 @@ function Header({ themeClass, menuSelected, setMenuSelected, setModeSelected, mo
       w-[95%] max-w-125`}
     >
       {/* Menu */}
-      <div className="flex items-center gap-1 md:gap-2">
+      <div className="flex items-center gap-3 md:gap-2">
         {["home", "about", "projects", "contact"].map((item) => (
           <button
             key={item}
@@ -55,15 +55,7 @@ function Header({ themeClass, menuSelected, setMenuSelected, setModeSelected, mo
       </button>
 
 
-      {/* MOBILE VIEW MODE BUTTON */}
-      <button
-        className="md:hidden fixed top-147 animate-bounce right-5 cursor-pointer p-2 rounded-full transition-colors "
-        onClick={() =>
-          setModeSelected(modeSelected === "light" ? "dark" : "light")
-        }
-      >
-        {modeSelected === "light" ? <Sun /> : <Moon />}
-      </button>
+   
     </motion.div>
   );
 }
