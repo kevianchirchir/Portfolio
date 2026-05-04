@@ -11,7 +11,7 @@
 }
 
 .icon{
-    @apply w-15 bg-purple-900 rounded-full p-3
+    @apply w-15 border-2 bg-white rounded-full p-3
 }
 
 .background{

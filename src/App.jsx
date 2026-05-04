@@ -1,17 +1,26 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import Header from './components/Header'
 import Content from './components/Content'
 function App() {
-  const [menuSelected, setMenuSelected] = useState("home")
+    const [menuSelected, setMenuSelected] = useState("home")
 
-  const [modeSelected, setModeSelected] = useState("light")
-  return (
-    <div className=' w-full h-screen flex items-center justify-center'>
-      <Header menuSelected={menuSelected} setMenuSelected={setMenuSelected} setModeSelected={setModeSelected} modeSelected={modeSelected} />
-      <Content menuSelected={menuSelected} setMenuSelected={setMenuSelected} setModeSelected={setModeSelected} modeSelected={modeSelected} />
-    </div>
-  )
+    const [modeSelected, setModeSelected] = useState(() => {
+        return localStorage.getItem("theme") || "light"
+    })
+
+    useEffect(() => {
+    localStorage.setItem("theme", modeSelected)
+}, [modeSelected])
+
+    const themeClass = modeSelected === "light" ? "bg-white text-black" : "bg-zinc-800 text-white"
+
+    return (
+        <div className=' w-full h-screen flex items-center justify-center'>
+            <Header themeClass={themeClass} menuSelected={menuSelected} setMenuSelected={setMenuSelected} setModeSelected={setModeSelected} modeSelected={modeSelected} />
+            <Content themeClass={themeClass} menuSelected={menuSelected} setMenuSelected={setMenuSelected} setModeSelected={setModeSelected} modeSelected={modeSelected} />
+        </div>
+    )
 }
 
 
