@@ -5,10 +5,10 @@ import { motion } from "motion/react"
 function Header({ themeClass, menuSelected, setMenuSelected, setModeSelected, modeSelected }) {
   const isActive = (menu) => {
     const base =
-      "px-4 md:px-5 py-2 rounded-full font-medium capitalize transition-all duration-300 ease-in-out cursor-pointer text-sm md:text-base";
+      "px-3 md:px-5 py-2 rounded-full font-medium capitalize transition-all duration-300 ease-in-out cursor-pointer text-sm md:text-base";
 
     if (menuSelected === menu) {
-      return `${base} bg-purple-900 text-white shadow-md`;
+      return `${base} bg-fuchsia-600 text-white shadow-md`;
     }
 
     return `${base} ${modeSelected === "dark"
@@ -21,13 +21,13 @@ function Header({ themeClass, menuSelected, setMenuSelected, setModeSelected, mo
 
   return (
     <motion.div initial={{ opacity: 0, scale: 0 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.4, scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 }, }}
-      className={`absolute z-4 top-4 left-1/2 -translate-x-1/2
-      flex items-center justify-between gap-2 md:gap-4
+      className={`fixed z-50 top-4 left-1/2 -translate-x-1/2
+      flex items-center justify-center gap-2 md:gap-4
       px-3 md:px-4 py-2
       rounded-full shadow-lg
       transition-colors
       ${themeClass}
-      w-[95%] max-w-125`}
+      w-[92%] md:w-auto md:max-w-4xl max-w-sm drop-shadow-[0_0_2px_rgba(236,72,800,0.6)]`}
     >
       {/* Menu */}
       <div className="flex items-center gap-3 md:gap-2">

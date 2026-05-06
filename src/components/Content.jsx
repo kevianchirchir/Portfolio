@@ -4,7 +4,8 @@ import StackIcon from "tech-stack-icons";
 import { useState, useEffect } from "react";
 import ScrollIndicator from "./ScrollIndicator";
 import { Sun, Moon } from "@boxicons/react";
-import Cards from "./Cards"
+import About from "./About"
+import Projects from "./Projects"
 
 function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setModeSelected }) {
     const icons = [
@@ -39,9 +40,9 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
         setCanScroll(menuSelected === "home" || "about" || "projects");
     }, [menuSelected]);
     return (
-        <div className="overscroll-behavior-y-contain w-full h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth ">
+        <div className="hide-scrollbar overscroll-behavior-y-contain w-full h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth ">
 
-          
+
 
             {/* HOME */}
 
@@ -71,23 +72,23 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
                         delaySpeed={1000}
                     />
                 </motion.h1>
-                <motion.div initial={{ opacity: 0, scale: 0, y: 0 }} animate={{ opacity: 1, scale: 1, type: spring, y: 20 }} transition={{ delay: 2, duration: 0.4 }}
+                <motion.div initial={{ opacity: 0, scale: 0, y: 0 }} animate={{ opacity: 1, scale: 1, type: "spring", y: 20 }} transition={{ delay: 2, duration: 0.4 }}
                     className="flex flex-col items-center justify-center" >
                     <h1 >Computer Programming @ Fanshawe</h1>
                     <h1>Front-End Developer • React • UI Building</h1>
                     <div className="flex items-center justify-center gap-5 m-2">
 
-                        <motion.a className="cursor-pointer sm:w-15 sm:h-15 h-12 w-12 bg-white rounded-full" href="https://www.linkedin.com/in/kevian-chirchir-06a583300/" whileHover={{ scale: 1.2 }}><img src="../src/assets/linkedin.svg" alt="Linkedin" /></motion.a>
-                        <motion.a className="cursor-pointer sm:w-15 sm:h-15 h-12 w-12 bg-white rounded-full" href="https://github.com/kevianchirchir" whileHover={{ scale: 1.2 }}><img src="../src/assets/github.svg" alt="Github" /></motion.a>
+                        <motion.a className="cursor-pointer sm:w-15 sm:h-15 h-12 w-12 bg-white rounded-full drop-shadow-[0_0_10px_rgba(236,72,800,0.6)]" href="https://www.linkedin.com/in/kevian-chirchir-06a583300/" whileHover={{ scale: 1.2 }}><img src="../src/assets/linkedin.svg" alt="Linkedin" /></motion.a>
+                        <motion.a className="cursor-pointer sm:w-15 sm:h-15 h-12 w-12 bg-white rounded-full drop-shadow-[0_0_10px_rgba(236,72,800,0.6)]" href="https://github.com/kevianchirchir" whileHover={{ scale: 1.2 }}><img src="../src/assets/github.svg" alt="Github" /></motion.a>
                     </div>
                 </motion.div>
-                <motion.h1 initial={{ opacity: 0, scale: 0, y: 30 }} animate={{ opacity: 1, scale: 1, type: spring }} transition={{ delay: 2.5, duration: 0.4 }} >
+                <motion.h1 initial={{ opacity: 0, scale: 0, y: 30 }} animate={{ opacity: 1, scale: 1, type: "spring" }} transition={{ delay: 2.5, duration: 0.4 }} >
                     my tech stack😵‍💫
                 </motion.h1>
-                <motion.div initial={{ opacity: 0, scale: 0, y: 30 }} animate={{ opacity: 1, scale: 1, type: spring }} transition={{ delay: 2.5, duration: 0.4 }}
-                    className="w-full max-w-xl overflow-hidden  rounded-xl shadow-lg p-4">
+                <motion.div initial={{ opacity: 0, scale: 0, y: 30 }} animate={{ opacity: 1, scale: 1, type: "spring" }} transition={{ delay: 2.5, duration: 0.4 }}
+                    className="w-full max-w-xl overflow-hidden  rounded-xl shadow-2xl p-4 ">
                     <motion.div
-                        className=" mx-auto w-500 cursor-grab flex gap-6 "
+                        className=" mx-auto w-500 cursor-grab flex gap-6  "
                         drag="x"
                         dragConstraints={{ left: -900, right: 0 }} // adjust based on width
                     >
@@ -111,24 +112,20 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
             </motion.section>
 
 
-            {/* NEXT SECTION */}
-            <motion.section onViewportEnter={() => setMenuSelected("about")} viewport={{ amount: 0.6 }} id="about" className={`transition-colors w-full h-screen flex items-center justify-center snap-start ${themeClass}  px-4`}>
-                <motion.h2 initial={{ scale: 0, opacity: 0 }} whileInView={{ scale: 1, opacity: 1 }} transition={{ duration: 0.5, bounce: spring }} className="text-2xl sm:text-4xl">About Me</motion.h2>
-
-            </motion.section>
+            {/* ABOUT SECTION */}
+            <About themeClass={themeClass} setMenuSelected={setMenuSelected}/>
 
 
             {/* NEXT SECTION */}
             <motion.section onViewportEnter={() => setMenuSelected("projects")} viewport={{ amount: 0.6 }} id="projects" className={`flex-col transition-colors w-full h-screen flex items-center justify-center snap-start ${themeClass}  px-4`}>
-                <h2 className="text-4xl mb-7">What I've Been Working On</h2>
-                <Cards/>
+                <Projects />
             </motion.section>
 
             {/* NEXT SECTION */}
             <motion.section onViewportEnter={() => setMenuSelected("contact")} viewport={{ amount: 0.6 }} id="contact"
                 className={`transition-colors w-full h-screen flex items-center justify-center snap-start ${themeClass}  px-4`}>
                 <h2 className="text-4xl">Contact</h2>
-                
+
 
             </motion.section>
         </div>
