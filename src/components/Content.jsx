@@ -6,7 +6,8 @@ import ScrollIndicator from "./ScrollIndicator";
 import { Sun, Moon } from "@boxicons/react";
 import About from "./About"
 import Projects from "./Projects"
-
+import github from "../assets/github.svg"
+import linkedin from "../assets/linkedin.svg"
 function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setModeSelected }) {
     const icons = [
         "tailwindcss", "react", "java", "azure", "css3",
@@ -78,8 +79,8 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
                     <h1>Front-End Developer • React • UI Building</h1>
                     <div className="flex items-center justify-center gap-5 m-2">
 
-                        <motion.a className="cursor-pointer sm:w-15 sm:h-15 h-12 w-12 bg-white rounded-full drop-shadow-[0_0_10px_rgba(236,72,800,0.6)]" href="https://www.linkedin.com/in/kevian-chirchir-06a583300/" whileHover={{ scale: 1.2 }}><img src="../src/assets/linkedin.svg" alt="Linkedin" /></motion.a>
-                        <motion.a className="cursor-pointer sm:w-15 sm:h-15 h-12 w-12 bg-white rounded-full drop-shadow-[0_0_10px_rgba(236,72,800,0.6)]" href="https://github.com/kevianchirchir" whileHover={{ scale: 1.2 }}><img src="../src/assets/github.svg" alt="Github" /></motion.a>
+                        <motion.a className="cursor-pointer sm:w-15 sm:h-15 h-12 w-12 bg-white rounded-full drop-shadow-[0_0_10px_rgba(236,72,800,0.6)]" href="https://www.linkedin.com/in/kevian-chirchir-06a583300/" whileHover={{ scale: 1.2 }}><img src={linkedin} alt="Linkedin" /></motion.a>
+                        <motion.a className="cursor-pointer sm:w-15 sm:h-15 h-12 w-12 bg-white rounded-full drop-shadow-[0_0_10px_rgba(236,72,800,0.6)]" href="https://github.com/kevianchirchir" whileHover={{ scale: 1.2 }}><img src={github} alt="Github" /></motion.a>
                     </div>
                 </motion.div>
                 <motion.h1 initial={{ opacity: 0, scale: 0, y: 30 }} animate={{ opacity: 1, scale: 1, type: "spring" }} transition={{ delay: 2.5, duration: 0.4 }} >

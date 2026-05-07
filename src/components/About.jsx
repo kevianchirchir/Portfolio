@@ -1,5 +1,6 @@
 import { motion } from "motion/react";
 import { Keyframe } from '@boxicons/react'
+import selfie from "../src/assets/selfie.png"
 
 function About({ themeClass, setMenuSelected }) {
         return (
@@ -62,7 +63,7 @@ function About({ themeClass, setMenuSelected }) {
                     {/* Image */}
                     <motion.img
                         initial={{ x: "1vw" }}
-                        src="../src/assets/selfie.png"
+                        src={selfie}
                         alt="Selfie"
                         className="rounded-full w-40 sm:w-56 lg:w-72 mx-auto shadow-2xl drop-shadow-[0_0_2px_rgba(236,72,153,0.6)]"
                     />
