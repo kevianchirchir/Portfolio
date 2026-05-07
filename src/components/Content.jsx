@@ -6,8 +6,8 @@ import ScrollIndicator from "./ScrollIndicator";
 import { Sun, Moon } from "@boxicons/react";
 import About from "./About"
 import Projects from "./Projects"
-import github from "../assets/github.svg"
-import linkedin from "../assets/linkedin.svg"
+import linkedin from "/linkedin.svg"
+import github from "/github.svg"
 function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setModeSelected }) {
     const icons = [
         "tailwindcss", "react", "java", "azure", "css3",

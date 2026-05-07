@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { Keyframe } from '@boxicons/react'
-import selfie from "../src/assets/selfie.png"
+import selfie from "/selfie.png"
 
 function About({ themeClass, setMenuSelected }) {
         return (
