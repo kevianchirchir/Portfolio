@@ -1,16 +1,20 @@
 import { Typewriter } from "react-simple-typewriter";
-import { motion, spring } from "motion/react"
+import { motion } from "motion/react"
 import StackIcon from "tech-stack-icons";
-import { useState, useEffect } from "react";
-import ScrollIndicator from "./ScrollIndicator";
+import { useState, useEffect, useRef } from "react";
 import { Sun, Moon } from "@boxicons/react";
+import { useMotionValue } from "motion/react";
 import About from "./About"
 import Contact from "./Contact"
 import Projects from "./Projects"
 import linkedin from "/linkedin.svg"
 import github from "/github.svg"
+
 function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setModeSelected }) {
     const isMobile = window.innerWidth < 1024
+    const x = useMotionValue(0)
+    const containerRef = useRef(null)
+    const limit = isMobile ? -1300 : -1050
 
     const icons = [
         "tailwindcss", "react", "java", "azure", "css3",
@@ -18,7 +22,6 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
         "github", "supabase", "sqlite", "js",
         "mysql", "typescript", "powershell", "reactrouter"
     ];
-
 
     const iconLinks = {
         tailwindcss: "https://tailwindcss.com",
@@ -40,104 +43,136 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
         reactrouter: "http://reactrouter.com/"
     };
 
-    const [canScroll, setCanScroll] = useState(true)
+   
 
-    useEffect(() => {
-        setCanScroll(menuSelected === "home" || "about" || "projects");
-    }, [menuSelected]);
     return (
-        <div className="hide-scrollbar overscroll-behavior-y-contain w-full h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth ">
-
-
+        <div className="hide-scrollbar overscroll-behavior-y-contain w-full h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth">
 
             {/* HOME */}
+            <motion.section
+                onViewportEnter={() => setMenuSelected("home")}
+                viewport={{ amount: 0.6 }}
+                id="home"
+                className={`${themeClass} relative w-full h-screen flex flex-col items-center justify-center snap-start px-4 pt-16 overflow-hidden transition-colors`}
+            >
+                {/* Background glow orbs */}
+                <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-fuchsia-700/10 rounded-full blur-3xl pointer-events-none" />
+                <div className="absolute bottom-1/4 right-1/4 w-56 h-56 bg-purple-700/10 rounded-full blur-3xl pointer-events-none" />
 
-            <motion.section whileInView={() => setMenuSelected("home")} viewport={{ amount: 0.6 }} id="home" className={`${themeClass} relative  z-0transition-colors w-full h-screen flex flex-col items-center justify-center snap-start px-4`}>
-                {/* SCROLL ANIMATION */}
-                {canScroll && <ScrollIndicator />}
 
-                {/* MOBILE THEME MODE BUTTON */}
+                {/* Mobile theme toggle */}
                 <button
-                    className="md:hidden fixed bottom-5 border right-5 cursor-pointer p-2 rounded-full transition-colors "
-                    onClick={() =>
-                        setModeSelected(modeSelected === "light" ? "dark" : "light")
-                    }
+                    className="md:hidden fixed bottom-5 right-5 cursor-pointer p-2 rounded-full border border-fuchsia-700/40 backdrop-blur-sm transition-colors"
+                    onClick={() => setModeSelected(modeSelected === "light" ? "dark" : "light")}
                 >
                     {modeSelected === "light" ? <Sun /> : <Moon />}
                 </button>
 
+                {/* Hero text */}
+                <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                    className="flex flex-col items-center gap-2 text-center"
+                >
+                    <p className="text-fuchsia-400 text-xs tracking-widest uppercase font-semibold">welcome to my portfolio</p>
+                    <h1 className="text-3xl sm:text-5xl font-bold">
+                        <Typewriter
+                            words={["Hi, I'm Kevian"]}
+                            loop={1}
+                            cursor
+                            cursorStyle="|"
+                            typeSpeed={50}
+                            deleteSpeed={100}
+                            delaySpeed={1000}
+                        />
+                    </h1>
 
-                <motion.h1 initial={{ y: 150 }} animate={{ y: 0 }} transition={{ duration: 0.35, delay: 2 }} className="text-3xl text-center sm:text-5xl font-bold">
-                    <Typewriter
-                        words={["Hi, I'm Kevian"]}
-                        loop={1}
-                        cursor
-                        cursorStyle="|"
-                        typeSpeed={50}
-                        deleteSpeed={100}
-                        delaySpeed={1000}
-                    />
-                </motion.h1>
-                <motion.div initial={{ opacity: 0, scale: 0, y: 0 }} animate={{ opacity: 1, scale: 1, type: "spring", y: 20 }} transition={{ delay: 2, duration: 0.4 }}
-                    className="flex flex-col items-center justify-center" >
-                    <h1 >Computer Programming @ Fanshawe</h1>
-                    <h1>Front-End Developer • React • UI Building</h1>
-                    <div className="flex items-center justify-center gap-5 m-2">
+                    <div className={`flex flex-col items-center gap-0.5 text-sm sm:text-base mt-1 ${modeSelected === "dark" ? "text-white/60" : "text-gray-500"}`}>
+                        <p>Computer Programming @ Fanshawe</p>
+                        <p>Front-End Developer • React • UI Building</p>
+                    </div>
 
-                        <motion.a className="cursor-pointer sm:w-15 sm:h-15 h-12 w-12 bg-white rounded-full drop-shadow-[0_0_10px_rgba(236,72,800,0.6)]" href="https://www.linkedin.com/in/kevian-chirchir-06a583300/" whileHover={{ scale: 1.2 }}><img src={linkedin} alt="Linkedin" /></motion.a>
-                        <motion.a className="cursor-pointer sm:w-15 sm:h-15 h-12 w-12 bg-white rounded-full drop-shadow-[0_0_10px_rgba(236,72,800,0.6)]" href="https://github.com/kevianchirchir" whileHover={{ scale: 1.2 }}><img src={github} alt="Github" /></motion.a>
+                    {/* Social links */}
+                    <div className="flex items-center gap-4 mt-3">
+                        <motion.a
+                            href="https://www.linkedin.com/in/kevian-chirchir-06a583300/"
+                            whileHover={{ scale: 1.1 }}
+                            className="w-11 h-11 bg-white rounded-full shadow-lg shadow-fuchsia-900/30 ring-1 ring-fuchsia-500/20 flex items-center justify-center overflow-hidden"
+                        >
+                            <img src={linkedin} alt="LinkedIn" className="w-full h-full" />
+                        </motion.a>
+                        <motion.a
+                            href="https://github.com/kevianchirchir"
+                            whileHover={{ scale: 1.1 }}
+                            className="w-11 h-11 bg-white rounded-full shadow-lg shadow-fuchsia-900/30 ring-1 ring-fuchsia-500/20 flex items-center justify-center overflow-hidden"
+                        >
+                            <img src={github} alt="GitHub" className="w-full h-full" />
+                        </motion.a>
                     </div>
                 </motion.div>
-                {/* ISSUE: TECH STACK ON MOBILE CAN'T SCROLL ALL THE WAY */}
-                <motion.h1 initial={{ opacity: 0, scale: 0, y: 30 }} animate={{ opacity: 1, scale: 1, type: "spring" }} transition={{ delay: 2.5, duration: 0.4 }} >
-                    my tech stack😵‍💫
-                </motion.h1>
-                <motion.div initial={{ opacity: 0, scale: 0, y: 30 }} animate={{ opacity: 1, scale: 1, type: "spring" }} transition={{ delay: 2.5, duration: 0.4 }}
-                    className="w-full max-w-xl overflow-hidden  rounded-xl shadow-2xl p-4 ">
-                    <motion.div
-                        className=" mx-auto w-500 cursor-grab flex gap-6  "
-                        drag="x"
-                        dragConstraints={isMobile ? { left: -1300, right: 0 } : { left: -1050, right: 0 }}
+
+                {/* Tech stack */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.4, duration: 0.4  }}
+                    className="flex flex-col items-center gap-2 mt-6 w-full"
+                >
+                    <p className="text-fuchsia-400 text-xs tracking-widest uppercase font-semibold">my tech stack</p>
+
+                    <div
+                        ref={containerRef}
+                        className="w-full max-w-xl overflow-hidden rounded-2xl border border-fuchsia-800/30 p-3"
+                        style={{ background: "linear-gradient(135deg, #a21caf11, #6b21a822)" }}
                     >
-
-                        {icons.map((icon, i) => (
-                            <motion.a
-                                key={i}
-                                href={iconLinks[icon]}
-                                className="icon shadow-lg min-w-17.5 flex justify-center items-center cursor-pointer"
-                                whileHover={{ scale: 1.2 }}
-
-                            >
-                                <StackIcon name={icon} />
-                            </motion.a>
-                        ))}
-
-                    </motion.div>
+                        <motion.div
+                            className="flex gap-5 cursor-grab active:cursor-grabbing"
+                            drag="x"
+                            dragConstraints={{ left: limit, right: 0 }}
+                            style={{ x }}
+                        >
+                            {icons.map((icon, i) => (
+                                <motion.a
+                                    key={i}
+                                    href={iconLinks[icon]}
+                                    target="_blank"
+                                    className="min-w-[52px] h-[52px] flex items-center justify-center rounded-xl bg-fuchsia-900/30 border border-fuchsia-700/20 hover:border-fuchsia-500/50 transition-colors"
+                                    whileHover={{ scale: 1.15, y: -2 }}
+                                >
+                                    <StackIcon name={icon} className="w-7 h-7" />
+                                </motion.a>
+                            ))}
+                        </motion.div>
+                    </div>
+                    <p className="text-xs text-fuchsia-400/40 tracking-wide">drag to explore</p>
                 </motion.div>
-                <motion.h1 initial={{ opacity: 0, scale: 0, y: 30 }} animate={{ opacity: 1, scale: 1, type: spring }} transition={{ delay: 2.5, duration: 0.4 }} className="text-gray-400 mt-3">(Drag to scroll)</motion.h1>
-
             </motion.section>
 
-
-            {/* ABOUT SECTION */}
+            {/* ABOUT */}
             <About themeClass={themeClass} setMenuSelected={setMenuSelected} />
 
-
-            {/* NEXT SECTION */}
-            <motion.section onViewportEnter={() => setMenuSelected("projects")} viewport={{ amount: 0.6 }} id="projects" className={`flex-col transition-colors w-full h-screen flex items-center justify-center snap-start ${themeClass}  px-4`}>
+            {/* PROJECTS */}
+            <motion.section
+                onViewportEnter={() => setMenuSelected("projects")}
+                viewport={{ amount: 0.6 }}
+                id="projects"
+                className={`flex-col transition-colors w-full h-screen flex items-center justify-center snap-start ${themeClass} px-4 pt-16`}
+            >
                 <Projects />
             </motion.section>
 
-            {/* NEXT SECTION */}
-            <motion.section onViewportEnter={() => setMenuSelected("contact")} viewport={{ amount: 0.6 }} id="contact"
-                className={`transition-colors w-full h-screen flex items-center justify-center snap-start ${themeClass}  px-4`}>
-               <Contact/>
-
-
+            {/* CONTACT */}
+            <motion.section
+                onViewportEnter={() => setMenuSelected("contact")}
+                viewport={{ amount: 0.6 }}
+                id="contact"
+                className={`transition-colors w-full h-screen flex items-center justify-center snap-start ${themeClass} px-4 py-10 overflow-y-auto pt-16`}
+            >
+                <Contact />
             </motion.section>
         </div>
     );
 }
-
 
 export default Content;
