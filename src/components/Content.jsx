@@ -5,16 +5,20 @@ import { useState, useEffect } from "react";
 import ScrollIndicator from "./ScrollIndicator";
 import { Sun, Moon } from "@boxicons/react";
 import About from "./About"
+import Contact from "./Contact"
 import Projects from "./Projects"
 import linkedin from "/linkedin.svg"
 import github from "/github.svg"
 function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setModeSelected }) {
+    const isMobile = window.innerWidth < 1024
+
     const icons = [
         "tailwindcss", "react", "java", "azure", "css3",
         "electron", "python", "html5", "git",
         "github", "supabase", "sqlite", "js",
-        "mysql", "typescript", "powershell"
+        "mysql", "typescript", "powershell", "reactrouter"
     ];
+
 
     const iconLinks = {
         tailwindcss: "https://tailwindcss.com",
@@ -32,7 +36,8 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
         js: "https://developer.mozilla.org/en-US/docs/Web/JavaScript",
         mysql: "https://www.mysql.com",
         typescript: "https://www.typescriptlang.org",
-        powershell: "https://learn.microsoft.com/en-us/powershell/"
+        powershell: "https://learn.microsoft.com/en-us/powershell/",
+        reactrouter: "http://reactrouter.com/"
     };
 
     const [canScroll, setCanScroll] = useState(true)
@@ -83,6 +88,7 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
                         <motion.a className="cursor-pointer sm:w-15 sm:h-15 h-12 w-12 bg-white rounded-full drop-shadow-[0_0_10px_rgba(236,72,800,0.6)]" href="https://github.com/kevianchirchir" whileHover={{ scale: 1.2 }}><img src={github} alt="Github" /></motion.a>
                     </div>
                 </motion.div>
+                {/* ISSUE: TECH STACK ON MOBILE CAN'T SCROLL ALL THE WAY */}
                 <motion.h1 initial={{ opacity: 0, scale: 0, y: 30 }} animate={{ opacity: 1, scale: 1, type: "spring" }} transition={{ delay: 2.5, duration: 0.4 }} >
                     my tech stack😵‍💫
                 </motion.h1>
@@ -91,7 +97,7 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
                     <motion.div
                         className=" mx-auto w-500 cursor-grab flex gap-6  "
                         drag="x"
-                        dragConstraints={{ left: -900, right: 0 }} // adjust based on width
+                        dragConstraints={isMobile ? { left: -1300, right: 0 } : { left: -1050, right: 0 }}
                     >
 
                         {icons.map((icon, i) => (
@@ -114,7 +120,7 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
 
 
             {/* ABOUT SECTION */}
-            <About themeClass={themeClass} setMenuSelected={setMenuSelected}/>
+            <About themeClass={themeClass} setMenuSelected={setMenuSelected} />
 
 
             {/* NEXT SECTION */}
@@ -125,7 +131,7 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
             {/* NEXT SECTION */}
             <motion.section onViewportEnter={() => setMenuSelected("contact")} viewport={{ amount: 0.6 }} id="contact"
                 className={`transition-colors w-full h-screen flex items-center justify-center snap-start ${themeClass}  px-4`}>
-                <h2 className="text-4xl">Contact</h2>
+               <Contact/>
 
 
             </motion.section>

@@ -14,11 +14,13 @@
   "dependencies": {
     "@boxicons/react": "^1.0.3",
     "@cursorify/react": "^0.0.43",
+    "@emailjs/browser": "^4.4.1",
     "@tailwindcss/vite": "^4.2.4",
     "framer-motion": "^12.38.0",
     "motion": "^12.38.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-router-dom": "^7.15.0",
     "react-simple-typewriter": "^5.0.1",
     "swiper": "^12.1.4",
     "tailwindcss": "^4.2.4",
