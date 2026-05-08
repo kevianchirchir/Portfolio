@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom'
 const projects = [
     {
         name: "My Portfolio",
-        tag: "React • TailwindCSS • Motion • React Router",
+        tag: "React • TailwindCSS • Motion • React Router • EmailJS API • SwiperJS",
         img: images["../assets/projects/portfolio.png"].default,
         description: "An animated and responsive portfolio built with React and TailwindCSS. ",
         github: "https://github.com/kevianchirchir/Portfolio",
