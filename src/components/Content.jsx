@@ -43,7 +43,7 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
         reactrouter: "http://reactrouter.com/"
     };
 
-   
+
 
     return (
         <div className="hide-scrollbar overscroll-behavior-y-contain w-full h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth">
@@ -56,9 +56,23 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
                 className={`${themeClass} relative w-full h-screen flex flex-col items-center justify-center snap-start px-4 pt-16 overflow-hidden transition-colors`}
             >
                 {/* Background glow orbs */}
-                <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-fuchsia-700/10 rounded-full blur-3xl pointer-events-none" />
-                <div className="absolute bottom-1/4 right-1/4 w-56 h-56 bg-purple-700/10 rounded-full blur-3xl pointer-events-none" />
+                <motion.div
+                    animate={{
+                        x: [0, 50, 0, -50, 0],
+                        y: [-50, 0, 50, 0, -50],
+                    }}
+                    transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
+                    className="absolute top-1/4 left-1/4 w-72 h-72 bg-fuchsia-700/10 rounded-full blur-3xl pointer-events-none"
+                />
 
+                <motion.div
+                    animate={{
+                        x: [0, -50, 0, 50, 0],
+                        y: [50, 0, -50, 0, 50],
+                    }}
+                    transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
+                    className="absolute bottom-1/4 right-1/4 w-56 h-56 bg-purple-700/10 rounded-full blur-3xl pointer-events-none"
+                />
 
                 {/* Mobile theme toggle */}
                 <button
@@ -116,7 +130,7 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.4, duration: 0.4  }}
+                    transition={{ delay: 0.4, duration: 0.4 }}
                     className="flex flex-col items-center gap-2 mt-6 w-full"
                 >
                     <p className="text-fuchsia-400 text-xs tracking-widest uppercase font-semibold">my tech stack</p>
