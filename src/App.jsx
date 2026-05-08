@@ -18,7 +18,7 @@ function App() {
     const themeClass = modeSelected === "light" ? "bg-white text-black" : "bg-zinc-800 text-white"
 
     return (
-        <Routes>
+        <Routes className="bg-zinc-700">
             <Route path="/unavailable" element={<Unavailable />}/>
             <Route path="*" element={
                 <div className=' w-full h-screen flex items-center justify-center'>

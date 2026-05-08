@@ -67,30 +67,25 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
                 onViewportEnter={() => setMenuSelected("home")}
                 viewport={{ amount: 0.6 }}
                 id="home"
-                className={`${themeClass} relative w-full h-screen flex flex-col items-center justify-center snap-start px-4 pt-16 overflow-hidden transition-colors`}
+                className={`
+        ${themeClass}
+        relative
+        w-full
+        min-h-svh
+        flex flex-col items-center justify-center
+        snap-start
+        px-4 pt-16
+        overflow-hidden
+        transition-colors
+    `}
             >
                 {/* Background glow orbs */}
-                <motion.div
-                    animate={{
-                        x: [0, 50, 0, -50, 0],
-                        y: [-50, 0, 50, 0, -50],
-                    }}
-                    transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
-                    className="absolute top-1/4 left-1/4 w-72 h-72 bg-fuchsia-700/10 rounded-full blur-3xl pointer-events-none"
-                />
-
-                <motion.div
-                    animate={{
-                        x: [0, -50, 0, 50, 0],
-                        y: [50, 0, -50, 0, 50],
-                    }}
-                    transition={{ duration: 7, repeat: Infinity, ease: "linear" }}
-                    className="absolute bottom-1/4 right-1/4 w-56 h-56 bg-purple-700/10 rounded-full blur-3xl pointer-events-none"
-                />
+                <div className="absolute top-1/4 left-1/4 w-72 h-72 bg-fuchsia-700/10 rounded-full blur-3xl pointer-events-none animate-pulse" />
+<div className="absolute bottom-1/4 right-1/4 w-56 h-56 bg-purple-700/10 rounded-full blur-3xl pointer-events-none animate-pulse" />
 
                 {/* Mobile theme toggle */}
                 <button
-                    className="md:hidden fixed bottom-5 right-5 cursor-pointer p-2 rounded-full border border-fuchsia-700/40 backdrop-blur-sm transition-colors"
+                    className="md:hidden z-600 fixed bottom-5 right-5 cursor-pointer p-2 rounded-full border border-fuchsia-700/40 backdrop-blur-sm transition-colors"
                     onClick={() => setModeSelected(modeSelected === "light" ? "dark" : "light")}
                 >
                     {modeSelected === "light" ? <Sun /> : <Moon />}
