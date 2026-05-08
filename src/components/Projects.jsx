@@ -12,7 +12,7 @@ const projects = [
         name: "My Portfolio",
         tag: "React • TailwindCSS • Motion • React Router",
         img: images["../assets/projects/portfolio.png"].default,
-        description: "An animated and responsive portfolio built with React and TailwindCSS. Focused on clean UI design, smooth interactions, and modern frontend development practices.",
+        description: "An animated and responsive portfolio built with React and TailwindCSS. ",
         github: "https://github.com/kevianchirchir/Portfolio",
         demo: null
     },
@@ -50,7 +50,7 @@ function Cards() {
         <motion.div
             className="w-full flex flex-col items-center gap-6 px-4"
             initial={{ scale: 0, opacity: 0 }}
-            whileInView={{ scale: 1, opacity: 1 }}
+            whileInView={{ scale: 0.8, opacity: 1 }}
             transition={{ duration: 0.4 }}
         >
             <div className="text-center">
@@ -66,7 +66,7 @@ function Cards() {
                 allowTouchMove={true}
                 modules={[Pagination]}
                 pagination={{ clickable: true }}
-                className="w-full max-w-4xl rounded-2xl overflow-hidden"
+                className="w-full  rounded-2xl overflow-hidden "
                 style={{ "--swiper-pagination-color": "#d946ef", "--swiper-pagination-bullet-inactive-color": "#6b21a8" }}
             >
                 {projects.map((project, i) => (
@@ -86,7 +86,7 @@ function Cards() {
                             </div>
 
                             {/* Content side */}
-                            <div className="flex flex-col gap-4 p-6 sm:p-8 flex-1 text-white">
+                            <div className="flex flex-col gap-4 p-6 sm:p-8 flex-1 text-white ">
                                 <div>
                                     <span className="text-fuchsia-400 text-xs tracking-widest uppercase font-medium">{project.tag}</span>
                                     <h1 className="font-bold text-xl sm:text-2xl mt-1">{project.name}</h1>
@@ -96,18 +96,18 @@ function Cards() {
                                     {project.description}
                                 </p>
 
-                                <div className="flex gap-3 mt-auto pt-2">
+                                <div className="flex gap-3 mt-auto pt-2 ">
                                     <a
                                         href={project.github}
                                         target="_blank"
-                                        className="flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium border border-fuchsia-700/50 hover:border-fuchsia-500 hover:bg-fuchsia-900/50 transition-all"
+                                        className="mb-5 flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium border border-fuchsia-700/50 hover:border-fuchsia-500 hover:bg-fuchsia-900/50 transition-all"
                                     >
                                         GitHub ↗
                                     </a>
                                     <button
                                         onClick={() => handleDemo(project.demo)}
                                         disabled={!project.demo}
-                                        className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all
+                                        className={`flex items-center mb-5 gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all
                                             ${project.demo
                                                 ? "bg-fuchsia-600 hover:bg-fuchsia-500 active:scale-95"
                                                 : "bg-fuchsia-900/30 text-fuchsia-400/50 cursor-not-allowed"

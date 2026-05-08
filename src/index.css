@@ -42,3 +42,7 @@
 img{
   will-change: transform;
 }
+
+.swiper-pagination{
+  @apply relative bottom-0;
+}

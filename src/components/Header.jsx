@@ -20,14 +20,14 @@ function Header({ themeClass, menuSelected, setMenuSelected, setModeSelected, mo
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="fixed z-50 top-4 left-1/2 -translate-x-1/2 w-[92%] md:w-auto"
+            className="fixed z-50 top-4 left-1/2 -translate-x-1/2 w-auto"
         >
             {/* Gradient border wrapper */}
             <div
-                className="rounded-full p-[1px]"
+                className="rounded-full p-px"
                 style={{ background: "linear-gradient(135deg, #a21caf55, #6b21a8aa, #a21caf55)" }}
             >
-                <div className={`flex items-center justify-between gap-2 md:gap-1 px-2 py-1.5 rounded-full backdrop-blur-md transition-colors
+                <div className={`flex items-center justify-evenly gap-3 md:gap-1 px-2 py-1.5 rounded-full backdrop-blur-md transition-colors
                     ${modeSelected === "dark"
                         ? "bg-zinc-900/80 shadow-lg shadow-fuchsia-950/40"
                         : "bg-white/80 shadow-lg shadow-fuchsia-200/40"
