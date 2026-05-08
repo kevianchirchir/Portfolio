@@ -11,10 +11,24 @@ import linkedin from "/linkedin.svg"
 import github from "/github.svg"
 
 function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setModeSelected }) {
-    const isMobile = window.innerWidth < 1024
     const x = useMotionValue(0)
     const containerRef = useRef(null)
-    const limit = isMobile ? -1300 : -1050
+
+
+    const innerRef = useRef(null)
+    const [limit, setLimit] = useState(-1050)
+
+    useEffect(() => {
+        const calculate = () => {
+            if (containerRef.current && innerRef.current) {
+                setLimit(-(innerRef.current.scrollWidth - containerRef.current.offsetWidth))
+            }
+        }
+
+        setTimeout(calculate, 100)
+        window.addEventListener("resize", calculate)
+        return () => window.removeEventListener("resize", calculate)
+    }, [])
 
     const icons = [
         "tailwindcss", "react", "java", "azure", "css3",
@@ -89,7 +103,6 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
                     transition={{ duration: 0.5, delay: 0.4 }}
                     className="flex flex-col items-center gap-2 text-center"
                 >
-                    <p className="text-fuchsia-400 text-xs tracking-widest uppercase font-semibold">welcome to my portfolio</p>
                     <h1 className="text-3xl sm:text-5xl font-bold">
                         <Typewriter
                             words={["Hi, I'm Kevian"]}
@@ -141,7 +154,7 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
                         style={{ background: "linear-gradient(135deg, #a21caf11, #6b21a822)" }}
                     >
                         <motion.div
-                            className="flex gap-5 cursor-grab active:cursor-grabbing"
+                            className="flex w-500 gap-5 cursor-grab active:cursor-grabbing"
                             drag="x"
                             dragConstraints={{ left: limit, right: 0 }}
                             style={{ x }}
@@ -151,7 +164,7 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
                                     key={i}
                                     href={iconLinks[icon]}
                                     target="_blank"
-                                    className="min-w-[52px] h-[52px] flex items-center justify-center rounded-xl bg-fuchsia-900/30 border border-fuchsia-700/20 hover:border-fuchsia-500/50 transition-colors"
+                                    className="min-w-13 h-13 flex items-center justify-center rounded-xl bg-fuchsia-900/30 border border-fuchsia-700/20 hover:border-fuchsia-500/50 transition-colors"
                                     whileHover={{ scale: 1.15, y: -2 }}
                                 >
                                     <StackIcon name={icon} className="w-7 h-7" />
