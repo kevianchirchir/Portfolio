@@ -189,9 +189,9 @@ function Content({ themeClass, modeSelected, menuSelected, setMenuSelected, setM
                 onViewportEnter={() => setMenuSelected("contact")}
                 viewport={{ amount: 0.6 }}
                 id="contact"
-                className={`transition-colors w-full h-screen flex items-center justify-center snap-start ${themeClass} px-4 py-10 overflow-y-auto pt-16`}
+                className={`overflow-hidden transition-colors w-full h-screen flex items-center justify-center snap-start ${themeClass} px-4 py-10 overflow-y-auto pt-16`}
             >
-                <Contact />
+                <Contact className="overflow-hidden" />
             </motion.section>
         </div>
     );

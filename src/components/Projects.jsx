@@ -62,10 +62,8 @@ function Cards() {
             transition={{ duration: 0.4 }}
         >
             <div className="text-center">
-                <p className="text-fuchsia-400 text-xs tracking-widest uppercase font-semibold mb-1">
-                    my work
-                </p>
-                <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold">
+                
+                <h2 className="text-xl mt-5 sm:text-2xl lg:text-3xl font-bold">
                     What I've Been Building
                 </h2>
             </div>

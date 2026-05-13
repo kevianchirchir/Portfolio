@@ -26,15 +26,15 @@ function Contact() {
     }
 
     return (
-        <div className="
+        <div className=" 
+        overflow-hidden
             w-full
-            min-h-[100svh]
             flex items-center justify-center
             px-4
             py-[calc(env(safe-area-inset-top)+2rem)]
         ">
             <div
-                className="relative w-full max-w-3xl rounded-2xl overflow-hidden p-[1px]"
+                className="relative w-full max-w-3xl rounded-2xl overflow-hidden p-px "
                 style={{ background: "linear-gradient(135deg, #a21caf, #6b21a8, #701a75)" }}
             >
 
