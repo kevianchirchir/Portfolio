@@ -1,171 +1,91 @@
 import emailjs from "@emailjs/browser"
 import { useState } from "react"
 import { HappyBeaming } from "@boxicons/react"
+import { motion } from "motion/react"
+
+const empty = { name: "", email: "", message: "" }
+
+const messages = {
+    sending: { text: "Sending… ", style: "bg-[#fff0a8]" },
+    sent: { text: "Message sent! Thanks! ", style: "bg-[#c4f5e6]" },
+    error: { text: "Oops, that didn't send. Please try again.", style: "bg-[#ffc9c9]" },
+    missing: { text: "Please fill in all three boxes.", style: "bg-[#ffc9c9]" },
+}
 
 function Contact() {
-
-    const [form, setForm] = useState({ name: "", email: "", message: "" })
+    const [form, setForm] = useState(empty)
     const [status, setStatus] = useState("")
 
-    const handleSubmit = () => {
+    const update = (key) => (e) => setForm({ ...form, [key]: e.target.value })
+
+    const handleSubmit = (e) => {
+        e?.preventDefault()
+        if (!form.name.trim() || !form.email.trim() || !form.message.trim()) {
+            setStatus("missing")
+            return
+        }
+        setStatus("sending")
         emailjs.send(
             import.meta.env.VITE_EMAILJS_SERVICE_ID,
             import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-            {
-                from_name: form.name,
-                from_email: form.email,
-                message: form.message,
-            },
+            { from_name: form.name, from_email: form.email, message: form.message },
             import.meta.env.VITE_EMAILJS_PUBLIC_KEY
         )
-            .then(() => setStatus("Message sent!"))
+            .then(() => { setStatus("sent"); setForm(empty) })
             .catch((error) => {
                 console.log("EmailJS error:", error)
-                setStatus("Something went wrong.")
+                setStatus("error")
             })
     }
 
     return (
-        <div className=" 
-        overflow-hidden
-            w-full
-            flex items-center justify-center
-            px-4
-            py-[calc(env(safe-area-inset-top)+2rem)]
-        ">
-            <div
-                className="relative w-full max-w-3xl rounded-2xl overflow-hidden p-px "
-                style={{ background: "linear-gradient(135deg, #a21caf, #6b21a8, #701a75)" }}
-            >
+        <div className="w-full flex items-center justify-center py-[calc(env(safe-area-inset-top)+1rem)]">
+            <div className="comic-panel w-full max-w-3xl p-5 sm:p-8 flex flex-col md:flex-row gap-6 md:gap-8">
 
-                <div className="
-                    bg-fuchsia-950
-                    rounded-2xl
-                    p-5 sm:p-8
-                    flex flex-col md:flex-row
-                    gap-6 md:gap-8
-                ">
+                <form
+                    onSubmit={handleSubmit}
+                    className="keep-colors relative flex flex-col gap-3 text-black flex-1 mt-3 p-4 sm:p-5 pt-6
+                        bg-[#ffd1ec] border-[3px] border-[#1a1033] rounded-2xl
+                        shadow-[4px_4px_0_#1a1033]"
+                >
+                    
 
-                    {/* LEFT — FORM */}
-                    <div className="flex flex-col gap-3 flex-1">
+                    <h2 className="text-xl text-black sm:text-2xl lg:text-3xl font-bold leading-tight">
+                        Let's work <span className="bg-[#d4bff5] px-2 rounded-lg border-2 border-[#1a1033] inline-block -rotate-2">together!</span>
+                    </h2>
 
-                        <p className="text-fuchsia-400 text-xs tracking-widest uppercase font-semibold">
-                            Get in touch
+                    <input value={form.name} onChange={update("name")} placeholder="Your name" aria-label="Your name" className="comic-input" />
+                    <input value={form.email} onChange={update("email")} type="email" placeholder="Your email" aria-label="Your email" className="comic-input" />
+                    <textarea value={form.message} onChange={update("message")} placeholder="Say hi…" aria-label="Your message" rows={4} className="comic-input resize-none" />
+
+                    <button
+                        type="submit"
+                        disabled={status === "sending"}
+                        className="comic-btn w-full py-2 text-lg bg-[#7ee8c7] cursor-pointer"
+                    >
+                        Send message 
+                    </button>
+
+                    {status && (
+                        <p role="status" className={`text-xs text-center border-2 border-[#1a1033] rounded-full py-1 ${messages[status].style}`}>
+                            {messages[status].text}
                         </p>
+                    )}
+                </form>
 
-                        <h2 className="text-white text-xl sm:text-2xl lg:text-3xl font-bold leading-tight">
-                            Let's work<br />
-                            <span className="text-fuchsia-400">together.</span>
-                        </h2>
-
-                        <div className="flex flex-col gap-2 mt-1">
-
-                            <input
-                                onChange={e => setForm({ ...form, name: e.target.value })}
-                                placeholder="Your name"
-                                className="
-                                    bg-fuchsia-900/50
-                                    border border-fuchsia-700/40
-                                    text-white placeholder-fuchsia-400/50
-                                    px-4 py-2
-                                    rounded-xl text-sm
-                                    focus:outline-none focus:border-fuchsia-500
-                                "
-                            />
-
-                            <input
-                                onChange={e => setForm({ ...form, email: e.target.value })}
-                                placeholder="Your email"
-                                className="
-                                    bg-fuchsia-900/50
-                                    border border-fuchsia-700/40
-                                    text-white placeholder-fuchsia-400/50
-                                    px-4 py-2
-                                    rounded-xl text-sm
-                                    focus:outline-none focus:border-fuchsia-500
-                                "
-                            />
-
-                            <textarea
-                                onChange={e => setForm({ ...form, message: e.target.value })}
-                                placeholder="Your message..."
-                                rows={4}
-                                className="
-                                    bg-fuchsia-900/50
-                                    border border-fuchsia-700/40
-                                    text-white placeholder-fuchsia-400/50
-                                    px-4 py-2
-                                    rounded-xl text-sm
-                                    focus:outline-none focus:border-fuchsia-500
-                                    resize-none
-                                "
-                            />
-                        </div>
-
-                        <button
-                            onClick={handleSubmit}
-                            className="
-                                w-full
-                                py-2
-                                rounded-xl text-sm font-semibold text-white
-                                bg-fuchsia-600 hover:bg-fuchsia-500
-                                active:scale-95 transition-all
-                            "
-                        >
-                            Send message →
-                        </button>
-
-                        {status && (
-                            <p className={`
-                                text-xs text-center
-                                ${status === "Message sent!" ? "text-green-400" : "text-red-400"}
-                            `}>
-                                {status}
-                            </p>
-                        )}
+                {/* INFO */}
+                <motion.div
+                    animate={{ y: [0, -14, 0], rotate: [-1.5, 1, -1.5] }}
+                    transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+                    className="flex flex-row md:flex-col justify-between md:justify-center gap-3 md:gap-4 md:w-52 text-sm"
+                >
+                    <div className="solid-bg text-black bg-[#cfeaff] border-[3px] border-[#1a1033] rounded-xl p-2.5 shadow-[3px_3px_0_#1a1033] -rotate-1">
+                        <p className="text-xs">Reply time</p>
+                        <p className="font-bold flex items-center gap-1">
+                            Within 24 hours <HappyBeaming className="inline" />
+                        </p>
                     </div>
-
-                    {/* RIGHT — INFO */}
-                    <div className="
-                        flex flex-row md:flex-col
-                        justify-between md:justify-center
-                        gap-4 md:gap-6
-                        md:w-52
-                        border-t md:border-t-0 md:border-l
-                        border-fuchsia-800
-                        pt-4 md:pt-0 md:pl-8
-                    ">
-
-                        <div>
-                            <p className="text-fuchsia-400 text-xs tracking-widest uppercase mb-1">
-                                Based in
-                            </p>
-                            <p className="text-white text-sm font-medium">
-                                London, Ontario 🍁
-                            </p>
-                        </div>
-
-                        <div>
-                            <p className="text-fuchsia-400 text-xs tracking-widest uppercase mb-1">
-                                Open to
-                            </p>
-                            <p className="text-white text-sm font-medium">
-                                Internships & Freelance
-                            </p>
-                        </div>
-
-                        <div>
-                            <p className="text-fuchsia-400 text-xs tracking-widest uppercase mb-1">
-                                Response time
-                            </p>
-                            <p className="text-white text-sm font-medium flex items-center gap-1">
-                                Within 24 hours <HappyBeaming className="inline" />
-                            </p>
-                        </div>
-
-                    </div>
-
-                </div>
+                </motion.div>
             </div>
         </div>
     )
