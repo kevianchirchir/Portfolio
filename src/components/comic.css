@@ -2,10 +2,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap");
 
 :root {
-
+  /* Real Comic Sans where it exists (Windows/Mac), Comic Neue web font everywhere else (phones).
+     Ends in sans-serif, NOT cursive: on phones "cursive" is a handwriting script font. */
   --font-comic: "Comic Sans MS", "Comic Sans", "Comic Neue", "Chalkboard SE", sans-serif;
 }
 
+/* Everything. !important so no Tailwind class (like font-comic) or inline style can override it. */
 *, *::before, *::after, ::placeholder, input, textarea, button, select {
   font-family: var(--font-comic) !important;
 }
@@ -13,6 +15,7 @@
 :root { --ink: #1a1033; --paper: #fff7e6; --text: #1a1033; }
 [data-mode="dark"] { --paper: #3b2270; --text: #fdf4ff; --ink: #0b0418; }
 
+/* In a components layer so Tailwind utilities (bg-*, rounded-*, shadow-*) can override them */
 @layer components {
   .comic-panel {
     background: var(--paper);
@@ -50,6 +53,7 @@
   }
 }
 
+/* ---------- Night mode: darker fills + light text (anything too bright is toned down) ---------- */
 [data-mode="dark"] { --input-bg: #241044; }
 [data-mode="dark"] .bg-\[\#ffe066\]:not(.keep-colors, .keep-colors *, .comic-btn, .solid-bg) { background-color: #8a6a10; }
 [data-mode="dark"] .bg-\[\#ff8fd0\]:not(.keep-colors, .keep-colors *, .comic-btn, .solid-bg) { background-color: #a3236f; }
@@ -71,6 +75,13 @@
 [data-mode="dark"] .halftone span { opacity: .55; }
 [data-mode="dark"] .halftone { background-image: radial-gradient(rgba(217,70,239,.14) 1.6px, transparent 1.7px); }
 
+/* Add class "keep-colors" to any element to keep its light-mode colors in night mode */
 .keep-colors { --paper: #fff7e6; --text: #1a1033; --ink: #1a1033; --input-bg: #fff; color: #1a1033; }
 
+/* Solid-colored stickers/buttons keep their bright fill AND dark text in both modes */
 .comic-btn, .comic-btn *, .solid-bg, .solid-bg * { color: #1a1033; }
+
+/* Phones: scale everything (text, spacing, widths) down ~6% */
+@media (max-width: 639px) {
+  html { font-size: 93.75%; }
+}

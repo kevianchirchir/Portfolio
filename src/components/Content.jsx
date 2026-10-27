@@ -115,7 +115,7 @@ function Content({ modeSelected, setMenuSelected, setModeSelected }) {
                         transition={{ duration: 0.4, delay: 0.7 }}
                         className="flex flex-col items-center gap-3 mt-8"
                     >
-                        <div className="flex flex-wrap justify-center gap-2 text-xs sm:text-sm">
+                        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs sm:text-sm text-center">
                             <motion.span animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 3.2, ease: "easeInOut" }} className="comic-btn text-black bg-[#ffe066] px-3 py-1 -rotate-2">Computer Programming @ Fanshawe</motion.span>
                             <motion.span animate={{ y: [0, -5, 0] }} transition={{ repeat: Infinity, duration: 3.8, ease: "easeInOut", delay: 0.6 }} className="comic-btn text-black bg-[#7ee8c7] px-3 py-1 rotate-1">Front-End Developer · React · UI Building</motion.span>
                         </div>
