@@ -49,6 +49,20 @@ function Content({ modeSelected, setMenuSelected, setModeSelected }) {
     const innerRef = useRef(null)
     const [limit, setLimit] = useState(-1050)
 
+    // Match the page + browser-bar color to the current mode (removes the white strip on phones)
+    useEffect(() => {
+        const color = modeSelected === "dark" ? "#1a0b33" : "#ffe9f6"
+        document.documentElement.style.backgroundColor = color
+        document.body.style.backgroundColor = color
+        let meta = document.querySelector('meta[name="theme-color"]')
+        if (!meta) {
+            meta = document.createElement("meta")
+            meta.name = "theme-color"
+            document.head.appendChild(meta)
+        }
+        meta.setAttribute("content", color)
+    }, [modeSelected])
+
     useEffect(() => {
         const calculate = () => {
             if (containerRef.current && innerRef.current) {
@@ -62,20 +76,20 @@ function Content({ modeSelected, setMenuSelected, setModeSelected }) {
 
     return (
         <MotionConfig reducedMotion="user">
-        <div data-mode={modeSelected} className="hide-scrollbar font-comic overscroll-behavior-y-contain w-full h-screen overflow-y-scroll snap-y snap-mandatory scroll-smooth">
+        <div data-mode={modeSelected} className="hide-scrollbar font-comic overscroll-y-contain fixed inset-0 w-full overflow-y-scroll snap-y snap-mandatory scroll-smooth">
 
             {/* HOME */}
             <motion.section
                 onViewportEnter={() => setMenuSelected("home")}
                 viewport={{ amount: 0.6 }}
                 id="home"
-                className={`${bg} relative w-full min-h-svh flex flex-col items-center justify-center snap-start px-4 pt-20 pb-6 overflow-hidden transition-colors`}
+                className={`${bg} relative w-full min-h-full flex flex-col items-center justify-center snap-start px-4 pt-20 pb-6 overflow-hidden transition-colors`}
             >
                 <Background />
 
                 <button
                     aria-label="Toggle theme"
-                    className="comic-btn md:hidden z-[600] fixed bottom-5 right-5 cursor-pointer p-2 bg-[#c9a7ff]"
+                    className="comic-btn md:hidden z-[600] fixed bottom-5 right-5 cursor-pointer w-11 h-11 p-0 flex items-center justify-center !rounded-full bg-[#c9a7ff]"
                     onClick={() => setModeSelected(modeSelected === "light" ? "dark" : "light")}
                 >
                     {modeSelected === "light" ? <Sun /> : <Moon />}
@@ -94,7 +108,7 @@ function Content({ modeSelected, setMenuSelected, setModeSelected }) {
                             transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
                             className="comic-panel relative px-6 sm:px-10 py-5 sm:py-7"
                         >
-                            <h1 className="text-3xl font-['Comic_Sans_MS',_'Comic_Sans',_cursive] sm:text-5xl font-bold min-h-[1.3em]">
+                            <h1 className="text-3xl sm:text-5xl font-bold min-h-[1.3em]">
                                 <Typewriter
                                     words={["Hi, I'm Kevian!"]}
                                     loop={1}
@@ -151,10 +165,10 @@ function Content({ modeSelected, setMenuSelected, setModeSelected }) {
                     >
                         <motion.span animate={{ y: [0, -4, 0] }} transition={{ repeat: Infinity, duration: 3.5, ease: "easeInOut", delay: 1 }} className="comic-btn text-black bg-[#ff8fd0] px-3 py-0.5 text-sm rotate-1">My tech stack</motion.span>
 
-                        <div ref={containerRef} className="comic-panel w-full max-w-xl overflow-hidden p-3 border-3 rounded-2xl !shadow-[4px_4px_0_#1a1033]">
+                        <div ref={containerRef} className="comic-panel w-4/5 max-w-[18rem] sm:w-full sm:max-w-xl overflow-hidden p-2 sm:p-3 border-3 rounded-2xl !shadow-[4px_4px_0_#1a1033]">
                             <motion.div
                                 ref={innerRef}
-                                className="flex gap-4 w-max cursor-grab active:cursor-grabbing"
+                                className="flex gap-3 sm:gap-4 w-max cursor-grab active:cursor-grabbing"
                                 drag="x"
                                 dragConstraints={{ left: limit, right: 0 }}
                                 style={{ x }}
@@ -165,11 +179,11 @@ function Content({ modeSelected, setMenuSelected, setModeSelected }) {
                                         href={iconLinks[icon]}
                                         target="_blank" rel="noreferrer"
                                         aria-label={icon}
-                                        className={`comic-btn w-13 h-13 shrink-0 flex items-center justify-center !rounded-xl ${tileColors[i % tileColors.length]}`}
+                                        className={`comic-btn w-10 h-10 sm:w-13 sm:h-13 shrink-0 flex items-center justify-center !rounded-xl ${tileColors[i % tileColors.length]}`}
                                         whileHover={{ scale: 1.18, rotate: i % 2 ? 8 : -8, y: -4 }}
                                         transition={{ type: "spring", stiffness: 400, damping: 14 }}
                                     >
-                                        <StackIcon name={icon} className="w-7 h-7" />
+                                        <StackIcon name={icon} className="w-5 h-5 sm:w-7 sm:h-7" />
                                     </motion.a>
                                 ))}
                             </motion.div>
@@ -187,7 +201,7 @@ function Content({ modeSelected, setMenuSelected, setModeSelected }) {
                 onViewportEnter={() => setMenuSelected("projects")}
                 viewport={{ amount: 0.6 }}
                 id="projects"
-                className={`relative overflow-hidden flex-col transition-colors w-full min-h-svh flex items-center justify-center snap-start ${bg} px-4 pt-16`}
+                className={`relative overflow-hidden flex-col transition-colors w-full min-h-full flex items-center justify-center snap-start ${bg} px-4 pt-16`}
             >
                 <Background />
                 <div className="relative z-10 w-full flex justify-center"><Projects /></div>
@@ -198,7 +212,7 @@ function Content({ modeSelected, setMenuSelected, setModeSelected }) {
                 onViewportEnter={() => setMenuSelected("contact")}
                 viewport={{ amount: 0.6 }}
                 id="contact"
-                className={`relative transition-colors w-full min-h-svh flex items-center justify-center snap-start ${bg} px-4 py-10 pt-16`}
+                className={`relative transition-colors w-full min-h-full flex items-center justify-center snap-start ${bg} px-4 py-10 pt-16`}
             >
                 <Background />
                 <div className="relative z-10 w-full"><Contact /></div>

@@ -39,12 +39,12 @@ function Contact() {
     }
 
     return (
-        <div className="w-full flex items-center justify-center py-[calc(env(safe-area-inset-top)+1rem)]">
+        <div className="w-full flex items-center justify-center py-2">
             <div className="comic-panel w-full max-w-3xl p-5 sm:p-8 flex flex-col md:flex-row gap-6 md:gap-8">
 
                 <form
                     onSubmit={handleSubmit}
-                    className="keep-colors relative flex flex-col gap-3 text-black flex-1 mt-3 p-4 sm:p-5 pt-6
+                    className="keep-colors relative flex flex-col gap-3 text-black flex-1 p-4 sm:p-5
                         bg-[#ffd1ec] border-[3px] border-[#1a1033] rounded-2xl
                         shadow-[4px_4px_0_#1a1033]"
                 >

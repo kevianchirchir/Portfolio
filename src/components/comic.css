@@ -1,10 +1,9 @@
-/* Paste at the VERY TOP of index.css (replace the old comic.css block), above @import "tailwindcss" */
-@import url("https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap");
-
+/* Replace your old comic block in index.css with this.
+   The Comic Neue web font is loaded from index.html (see the <link> tags), not from CSS. */
 :root {
   /* Real Comic Sans where it exists (Windows/Mac), Comic Neue web font everywhere else (phones).
      Ends in sans-serif, NOT cursive: on phones "cursive" is a handwriting script font. */
-  --font-comic: "Comic Sans MS", "Comic Sans", "Comic Neue", "Chalkboard SE", sans-serif;
+  --font-comic: "Comic Sans MS", "Comic Sans", "Comic Neue", sans-serif;
 }
 
 /* Everything. !important so no Tailwind class (like font-comic) or inline style can override it. */
@@ -85,3 +84,6 @@
 @media (max-width: 639px) {
   html { font-size: 93.75%; }
 }
+
+/* Page background behind the browser bar / overscroll (Content.jsx keeps this in sync with the mode) */
+html, body { background-color: #ffe9f6; overscroll-behavior: none; }
